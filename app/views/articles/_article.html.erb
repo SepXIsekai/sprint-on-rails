@@ -1,5 +1,5 @@
 <div id="<%= dom_id article %>">
-  <div class="box-glass">
+  <div class="box">
     <p>
       <strong>Title:</strong>
       <%= article.title %>
@@ -10,5 +10,8 @@
       <strong >Description:</strong>
       <%= article.description %>
     </p>
+    <%if article.cover_image.attached?%>
+      <%= image_tag article.cover_image , class: "object-cover w-full h-64"%>
+    <%end %>
   </div>
 </div>
