@@ -18,6 +18,4 @@ describe 'Admin can login' do
             expect(page).to have_content('New article')
         end
     end
-
-    
 end
