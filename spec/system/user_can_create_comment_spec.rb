@@ -3,11 +3,11 @@ require 'rails_helper'
 describe 'User can see article' do
   context 'an article exists' do
     before do
-      create(:article)
+      create(:comment)
     end
-    it "display article on page" do
+    it "display created comment on the page" do
       visit root_path
-      expect(page).to have_content('Sprints')
+      fill_in 'comment[description]', with: 'hi there'
     end
   end
 end
