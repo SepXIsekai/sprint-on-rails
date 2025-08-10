@@ -1,5 +1,6 @@
-<div>
-  <div class="carousel w-full">
+<div class="max-w-5xl mx-auto p-4">
+  <!-- Carousel ภาพใหญ่ -->
+  <div class="carousel w-fit mb-6">
     <div id="item1" class="carousel-item w-full">
       <img
         src="https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.webp"
@@ -22,23 +23,36 @@
     </div>
   </div>
 
-<% content_for :title, "Articles" %>
+  <% content_for :title, "Articles" %>
 
-<div class="carousel carousel-center rounded-box space-x-4 p-4 bg-base-200">
-  <% @articles.each do |article| %>
-    <div class="carousel-item">
-      <div class="card w-64 bg-base-100 shadow-xl">
-        <div class="card-body">
-          <%= render article %>
-          <div class="mt-2">
-            <%= link_to "Show this article", article, class: "btn btn-primary btn-sm" %>
+  <!-- Carousel การ์ด -->
+  <div class="carousel carousel-center rounded-box space-x-4 p-4 overflow-x-auto max-w-full">
+    <% @articles.each do |article| %>
+      <div class="carousel-item">
+        <div class="card w-64 bg-base-100 shadow-xl">
+          <div class="card-body">
+            <%= render article %>
+            <div class="mt-2">
+              <%= link_to "Show this article", article, class: "btn btn-primary btn-sm" %>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  <% end %>
-</div>
+    <% end %>
+  </div>
+  <div class="carousel carousel-center rounded-box space-x-4 p-4 overflow-x-auto max-w-full">
+    <% @articles.each do |article| %>
+      <div class="carousel-item">
+        <div class="card w-64 bg-base-100 shadow-xl">
+          <div class="card-body">
+            <%= render partial: "video", locals: { article: article } %>
 
-
-
+            <div class="mt-2">
+              <%= link_to "Show this article", article, class: "btn btn-primary btn-sm" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>

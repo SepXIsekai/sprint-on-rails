@@ -1,17 +1,17 @@
 <div id="<%= dom_id article %>">
-  <div class="box">
+  <div>
     <p>
       <strong>Title:</strong>
-      <%= article.title %>
+      <%= article.content&.title %>
     </p>
   </div>
-  <div class="box-glass">
+  <div>
     <p>
       <strong >Description:</strong>
       <%= article.description %>
     </p>
-    <%if article.cover_image.attached?%>
-      <%= image_tag article.cover_image , class: "object-cover w-full h-64"%>
-    <%end %>
+  </div>
+  <div>
+    <%= render @article%>
   </div>
 </div>

@@ -1,12 +1,15 @@
-<% content_for :title, "Editing article" %>
+<% content_for :title, "Editing Article" %>
 
-<h1>Editing article</h1>
+<div class="max-w-3xl mx-auto p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
+  <h1 class="text-3xl font-bold mb-6 text-gray-800">✏️ Editing Article</h1>
 
-<%= render "form", article: @article %>
+  <%= render "form", article: @article %>
 
-<br>
-
-<div>
-  <%= link_to "Show this article", [:admin , @article] %> |
-  <%= link_to "Back to articles", admin_articles_path %>
+  <div class="mt-8 flex items-center gap-4 text-sm">
+    <%= link_to "📄 Show this article", [:admin, @article],
+        class: "px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition" %>
+    
+    <%= link_to "⬅ Back to articles", admin_articles_path,
+        class: "px-4 py-2 bg-gray-200 text-gray-800 rounded-lg shadow hover:bg-gray-300 transition" %>
+  </div>
 </div>

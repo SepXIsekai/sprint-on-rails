@@ -1,12 +1,18 @@
 Rails.application.routes.draw do
+  resources :comments
   resource :session
   resources :passwords, param: :token
   resources :articles, only: [ :index, :show ]
 
   namespace :admin do
-    resources :articles
+    resources :articles do
+      member do
+        patch :submit
+      end
+    end
     root "articles#index"
   end
+
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

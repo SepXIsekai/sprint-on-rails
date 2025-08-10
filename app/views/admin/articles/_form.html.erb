@@ -1,27 +1,39 @@
-<%= form_with(model: [:admin , article]) do |form| %>
+<%= form_with(model: [:admin, article]) do |form| %>
+  <% disabled = (article.status == "waiting_for_review") %>
   <% if article.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(article.errors.count, "error") %> prohibited this admin_article from being saved:</h2>
-      <ul>
+    <div class="text-red-600 mb-4">
+      <h2 class="font-semibold mb-2"><%= pluralize(article.errors.count, "error") %> prohibited this admin_article from being saved:</h2>
+      <ul class="list-disc list-inside">
         <% article.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+  <%= form.fields_for :content do |content_form|%>
+    <div>
+      <%= content_form.label :title, class: 'block'%>
+      <%= content_form.text_field :title, class:'border-1 w-full'%>
+    </div>
+  <%end %>
+  <div class="mb-4">
+    <%= form.label :description, class: "block font-medium mb-1" %>
+    <%= form.text_area :description, class: "w-full border border-gray-300 rounded px-3 py-2 h-24 resize-y focus:outline-none focus:ring-2 focus:ring-blue-500", disabled: disabled %>
+  </div>
+  <div class="mb-4">
+    <%= form.label :cover_image, class: "block font-medium mb-1" %>
+    <%= form.file_field :cover_image, class: "w-full", disabled: disabled %>
   </div>
   <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.textarea :description %>
-  </div>
-  <div>
-    <%= form.label :cover_image, style: "display: block" %>
-    <%= form.file_field :cover_image %>
-  </div>
-  <div>
-    <%= form.submit %>
+    <div>
+      <% if article.status == "waiting_for_review" %>
+        <%= hidden_field_tag "article[status]", "waiting_for_review" %>
+        <%= button_tag "Approve", type: "submit", name: "article[status]", value: "published", class: "bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded mr-2" %>
+        <%= button_tag "Reject", type: "submit", name: "article[status]", value: "draft", class: "bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded" %>
+      <% else %>
+        <%= button_tag "Save as Draft", type: "submit", name: "article[status]", value: "draft", class: "bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded mr-2" %>
+        <%= button_tag "Submit for Review", type: "submit", name: "article[status]", value: "waiting_for_review", class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" %>
+      <% end %>
+    </div>
   </div>
 <% end %>
