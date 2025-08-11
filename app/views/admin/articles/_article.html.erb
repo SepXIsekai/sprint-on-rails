@@ -1,21 +1,26 @@
-<div id="<%= dom_id article %>" class="mb-8">
-  <div class="card bg-base-100 shadow-lg border border-base-300 rounded-lg overflow-hidden">
+<div id="<%= dom_id article %>" class="mb-1">
+  <div class="card bg-base-100 border border-base-300 rounded-lg ">
     <div class="card-body p-6">
       <h2 class="card-title text-xl font-bold mb-3">
         <span class="text-primary">Title:</span>
         <span class="font-normal text-gray-800"><%= article.content&.title %></span>
       </h2>
 
-      <p class="mt-1 mb-4 text-gray-700">
-        <span class="text-primary font-semibold">Description:</span>
-        <span class="font-normal"><%= article.description %></span>
-      </p>
-
       <% if article.cover_image.present? %>
         <div class="overflow-hidden rounded-md border border-base-300 max-w-full max-h-64">
           <%= image_tag article.cover_image, alt: "Cover image for #{article.content&.title}", class: "object-cover w-full h-64" %>
         </div>
       <% end %>
+
+      <p class="mt-1 mb-4 text-gray-700">
+        <span class="text-primary font-semibold">Status:</span>
+        <span class="font-normal"><%= article.status&.titleize %></span>
+      </p>
+
+      <p class="mt-1 mb-4 text-gray-700">
+        <span class="text-primary font-semibold">Description:</span>
+        <span class="font-normal"><%= article.description %></span>
+      </p>
     </div>
   </div>
 </div>
