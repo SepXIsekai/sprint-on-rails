@@ -7,7 +7,7 @@ describe 'User can see article' do
     end
     it "display article on page" do
       visit root_path
-      expect(page).to have_content('Sprints')
+      expect(page).to have_content('Test Article Title')
     end
   end
 end
