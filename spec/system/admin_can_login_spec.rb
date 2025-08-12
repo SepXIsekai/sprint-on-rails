@@ -15,7 +15,7 @@ describe 'Admin can login' do
             click_button 'Sign in'
 
             expect(page).to have_current_path(admin_articles_path)
-            expect(page).to have_content('New article')
+            expect(page).to have_content('Article')
         end
     end
 end
