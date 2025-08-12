@@ -1,58 +1,147 @@
 <!DOCTYPE html>
-<html data-theme="light">
-  <head>
-    <title><%= content_for(:title) || "Odds Casts" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <%= yield :head %>
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
-  <body>
-    <div class="navbar bg-base-100 shadow-sm px-4">
-      <!-- Hamburger menu -->
-      <div class="flex-none">
-        <div class="drawer">
-          <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-          <div class="drawer-content">
-            <label for="my-drawer" class="btn btn-primary drawer-button p-2">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" 
-            class="inline-block h-6 w-6 stroke-current">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-              d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </label>
-          </div>
-          <div class="drawer-side">
-            <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-            <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-              <li><%= link_to "New article", new_admin_article_path, class: "btn w-full" %></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <!-- Center: Admin link -->
-      <div class="flex-1 flex items-center justify-center">
-        <%= link_to "Admin", admin_articles_path, class: "text-2xl font-bold" %>
-      </div>
-      <!-- Right: Logout -->
-      <div class="flex-none">
-        <% if authenticated? %>
-          <%= button_to "Log out", session_path, method: :delete, class: "btn btn-ghost" %>
-        <% end %>
-      </div>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<!-- BEGIN: Head -->
+<head>
+    <meta charset="utf-8">
+    <meta name="csrf-token" content="<%= form_authenticity_token %>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Midone admin is super flexible, powerful, clean & modern responsive tailwind admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, midone Admin Template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="LEFT4CODE">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <title><%= content_for?(:title) ? yield(:title) : 'Admin Dashboard' %> - Midone</title>
+    
+    <!-- BEGIN: CSS Assets-->
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <link rel="stylesheet" href="/midone/css/vendors/highlight.css">
+    <link rel="stylesheet" href="/midone/css/themes/rubick/top-menu.css">
+    <link rel="stylesheet" href="/midone/css/vendors/simplebar.css">
+    <link rel="stylesheet" href="/midone/css/app.css">
+    <!-- END: CSS Assets-->
+</head>
+<!-- END: Head -->
+<body>
+    <!-- Page Loader -->
+    <div class="page-loader bg-background fixed inset-0 z-[100] flex items-center justify-center transition-opacity">
+        <div class="loader-spinner !w-14"></div>
     </div>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
-  </body>
+    
+    <!-- Main Content -->
+    <div class="rubick min-h-screen dark:bg-background before:bg-primary dark:before:bg-foreground/[.01] before:fixed before:inset-0 before:bg-noise after:bg-accent after:bg-contain after:fixed after:inset-0 after:blur-xl dark:after:opacity-20 [--color-nav-foreground:var(--color-background)] dark:[--color-nav-foreground:var(--color-foreground)]">
+        <!-- Top Navigation -->
+        <div class="border-(--color-nav-foreground)/20 relative z-30 flex h-16 items-center border-b">
+            <a class="text-(--color-nav-foreground) border-(--color-nav-foreground)/20 hidden h-full items-center border-r px-7 xl:flex" href="">
+                <div class="from-theme-1 to-theme-2 flex size-[34px] items-center justify-center rounded-lg bg-gradient-to-r">
+                    <div class="relative h-[16px] w-[16px] -rotate-45 [&_div]:bg-white">
+                        <div class="absolute inset-y-0 left-0 my-auto h-[75%] w-[21%] rounded-full opacity-50"></div>
+                        <div class="absolute inset-0 m-auto h-[120%] w-[21%] rounded-full"></div>
+                        <div class="absolute inset-y-0 right-0 my-auto h-[75%] w-[21%] rounded-full opacity-50"></div>
+                    </div>
+                </div>
+                <div class="ml-3.5">
+                    <span class="text-base font-medium">Midone</span>
+                    <span class="text-base font-light">Rubick</span>
+                </div>
+            </a>
+            
+            <div class="flex h-full grow items-center gap-5 px-7">
+                <!-- Mobile Menu Toggle -->
+                <div class="border-(--color-nav-foreground)/30 open-mobile-menu mr-auto flex size-9 cursor-pointer items-center justify-center rounded-xl border">
+                    <i data-lucide="chart-no-axes-column" class="size-4 stroke-[1.5] stroke-(--color) fill-(--color)/25 rotate-90 [--color:var(--color-nav-foreground)]"></i>
+                </div>
+                
+                <!-- Top Menu Items -->
+                <ul class="truncate gap-x-6 mr-auto hidden [--background-image-chevron:var(--background-image-chevron-light)] [--color-base:--alpha(var(--color-nav-foreground)/70%)] [--color-link:var(--color-nav-foreground)] xl:flex">
+                    <li class="[&:not(:last-child)&gt;a]:text-(--color-link) text-(--color-base) before:bg-(image:--background-image-chevron) relative before:absolute before:inset-y-0 before:my-auto before:-ml-4 before:size-2 before:-rotate-90 before:bg-center before:bg-no-repeat before:opacity-70 first:before:hidden">
+                        <a href="<%= admin_articles_path %>">Articles</a>
+                    </li>
+                    <li class="[&:not(:last-child)&gt;a]:text-(--color-link) text-(--color-base) before:bg-(image:--background-image-chevron) relative before:absolute before:inset-y-0 before:my-auto before:-ml-4 before:size-2 before:-rotate-90 before:bg-center before:bg-no-repeat before:opacity-70 first:before:hidden">
+                        <a href="#">Dashboard</a>
+                    </li>
+                </ul>
+                
+                <!-- Search -->
+                <div class="quick-search-toggle bg-(--color-nav-foreground)/10 border-(--color-nav-foreground)/30 text-(--color-nav-foreground) hover:ring-foreground/5 flex h-9 cursor-pointer items-center rounded-full border px-4 ring-1 ring-transparent ring-offset-2 ring-offset-transparent">
+                    <div class="flex items-center gap-3 opacity-70">
+                        <i data-lucide="search" class="size-4 stroke-[1.5] [--color:currentColor] stroke-(--color) fill-(--color)/25"></i>
+                        ⌘K
+                    </div>
+                </div>
+                
+                <!-- Notifications -->
+                <div class="group/notifications relative flex h-9 items-center">
+                    <i data-lucide="bell" class="size-4 stroke-[1.5] stroke-(--color) fill-(--color)/25 [--color:var(--color-nav-foreground)]"></i>
+                </div>
+                
+                <!-- Profile -->
+                <div class="group/profile relative size-9 flex-none">
+                    <span data-content="" class="tooltip border-(--color)/5 block relative flex-none overflow-hidden rounded-full border-3 ring-1 ring-(--color)/40 size-full [--color:var(--color-nav-foreground)]">
+                        <img class="absolute top-0 size-full object-cover" src="/midone/images/fakers/profile-15.jpg" alt="Profile">
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content Area -->
+        <div class="mt-5 p-4">
+            <!-- Mobile Menu Close Button -->
+            <div class="close-mobile-menu fixed ml-[275px] top-0 xl:hidden z-60 cursor-pointer text-background dark:text-foreground [&.close-mobile-menu--mobile-menu-open]:block hidden">
+                <div class="ml-5 mt-5 flex size-10 items-center justify-center">
+                    <i data-lucide="x" class="[--color:currentColor] stroke-(--color) fill-(--color)/25 size-7 stroke-1"></i>
+                </div>
+            </div>
+            
+            <!-- Top Menu -->
+            <ul class="top-menu transition-[margin] duration-200 w-[275px] xl:w-auto h-screen xl:h-auto z-50 xl:z-50 top-0 left-0 fixed xl:relative z-10  -ml-[275px] [&.top-menu--mobile-menu-open]:ml-0 xl:ml-0 before:content-[''] before:fixed before:hidden [&.top-menu--mobile-menu-open]:before:block before:inset-0 before:bg-black/80 dark:before:bg-foreground/5 before:backdrop-blur after:content-[''] after:transition-[margin] after:duration-200 after:-ml-[275px] [&.top-menu--mobile-menu-open]:after:ml-0 after:fixed after:w-[275px] after:inset-0 after:bg-primary dark:after:bg-background after:bg-noise">    
+                <li>
+                    <a href="<%= admin_articles_path %>" class="top-menu__link <%= 'top-menu__link--active' if controller_name == 'articles' %>">
+                        <div class="top-menu__link__icon">
+                            <i data-lucide="file-text" class="size-4 stroke-[1.5] [--color:currentColor] stroke-(--color) fill-(--color)/25"></i>
+                        </div>
+                        <div class="top-menu__link__title">
+                            Articles
+                        </div>
+                    </a>
+                </li>
+            </ul>
+
+            
+
+            <!-- Side Menu -->
+            
+            
+            <!-- Content Area -->
+            <div class="pt-8 pb-12 px-7 z-10 relative before:absolute before:inset-0 before:opacity-[.07] before:bg-foreground before:rounded-4xl after:absolute after:inset-0 after:bg-[color-mix(in_oklch,_var(--color-background),_var(--color-foreground)_2%)] after:rounded-4xl after:border after:border-foreground/[.15] dark:after:opacity-[.59]">
+                <div class="relative z-20">
+                    <div class="mt-5">
+                        <%= yield %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- BEGIN: Vendor JS Assets-->
+    <script src="/midone/js/vendors/dom.js"></script>
+    <script src="/midone/js/vendors/lucide.js"></script>
+    <script src="/midone/js/vendors/highlight.js"></script>
+    <script src="/midone/js/vendors/tab.js"></script>
+    <script src="/midone/js/vendors/modal.js"></script>
+    <script src="/midone/js/vendors/accordion.js"></script>
+    <script src="/midone/js/vendors/simplebar.js"></script>
+    <script src="/midone/js/vendors/tippy.js"></script>
+    <script src="/midone/js/components/base/page-loader.js"></script>
+    <script src="/midone/js/components/base/lucide.js"></script>
+    <script src="/midone/js/components/base/highlight.js"></script>
+    <script src="/midone/js/components/base/code.js"></script>
+    <script src="/midone/js/themes/rubick.js"></script>
+    <script src="/midone/js/utils/helper.js"></script>
+    <script src="/midone/js/components/base/tippy.js"></script>
+    <script src="/midone/js/components/theme-switcher.js"></script>
+    <!-- END: Vendor JS Assets-->
+    
+    <%= javascript_importmap_tags %>
+</body>
 </html>

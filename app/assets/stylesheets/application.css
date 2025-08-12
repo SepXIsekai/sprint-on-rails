@@ -9,5 +9,10 @@
  * Consider organizing styles into separate files for maintainability.
  */
 
-
-
+/* Import Midone theme CSS files */
+@import url('midone/css/app.css');
+@import url('midone/css/themes/rubick/top-menu.css');
+@import url('midone/css/themes/rubick/side-menu.css');
+@import url('midone/css/vendors/highlight.css');
+@import url('midone/css/vendors/simplebar.css');
+@import url('midone.css');
