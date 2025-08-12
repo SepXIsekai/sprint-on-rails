@@ -7,7 +7,8 @@ RSpec.describe 'Admin can create article', type: :system do
     visit new_admin_article_path
 
     fill_in 'Description', with: 'Test description'
-    click_button 'Save as Draft'
+    sleep 2
+    click_button 'articleDraft[status]'
 
     expect(page).to have_content('Article was successfully created')
   end

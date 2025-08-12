@@ -94,7 +94,7 @@
             </div>
             
             <!-- Top Menu -->
-            <ul class="top-menu transition-[margin] duration-200 w-[275px] xl:w-auto h-screen xl:h-auto z-50 xl:z-50 top-0 left-0 fixed xl:relative z-10  -ml-[275px] [&.top-menu--mobile-menu-open]:ml-0 xl:ml-0 before:content-[''] before:fixed before:hidden [&.top-menu--mobile-menu-open]:before:block before:inset-0 before:bg-black/80 dark:before:bg-foreground/5 before:backdrop-blur after:content-[''] after:transition-[margin] after:duration-200 after:-ml-[275px] [&.top-menu--mobile-menu-open]:after:ml-0 after:fixed after:w-[275px] after:inset-0 after:bg-primary dark:after:bg-background after:bg-noise">    
+            <ul class="top-menu transition-[margin] duration-200 w-[275px] h-screen z-50 top-0 left-0 fixed z-10 overflow-y-auto overflow-x-hidden -ml-[275px] [&.top-menu--mobile-menu-open]:ml-0 before:content-[''] before:fixed before:hidden [&.top-menu--mobile-menu-open]:before:block before:inset-0 before:bg-black/80 dark:before:bg-foreground/5 before:backdrop-blur after:content-[''] after:transition-[margin] after:duration-200 after:-ml-[275px] [&.top-menu--mobile-menu-open]:after:ml-0 after:fixed after:w-[275px] after:inset-0 after:bg-primary dark:after:bg-background after:bg-noise">    
                 <li>
                     <a href="<%= admin_articles_path %>" class="top-menu__link <%= 'top-menu__link--active' if controller_name == 'articles' %>">
                         <div class="top-menu__link__icon">
@@ -107,11 +107,6 @@
                 </li>
             </ul>
 
-            
-
-            <!-- Side Menu -->
-            
-            
             <!-- Content Area -->
             <div class="pt-8 pb-12 px-7 z-10 relative before:absolute before:inset-0 before:opacity-[.07] before:bg-foreground before:rounded-4xl after:absolute after:inset-0 after:bg-[color-mix(in_oklch,_var(--color-background),_var(--color-foreground)_2%)] after:rounded-4xl after:border after:border-foreground/[.15] dark:after:opacity-[.59]">
                 <div class="relative z-20">

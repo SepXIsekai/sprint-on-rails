@@ -13,23 +13,23 @@
   <%= form.fields_for :content do |content_form|%>
     <div class="form-control">
       <%= content_form.label :title, class: "label" %>
-      <%= content_form.text_field :title, class: "input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-gray-100 focus:ring-opacity-50" %>
+      <%=   content_form.text_field :title, class: "input input-bordered border rounded-md  border-black-500 w-full focus:outline-none focus:ring-2 focus:ring-gray-100 focus:ring-opacity-50", disabled: disabled  %>
     </div>
   <%end %>
   <div class="form-control">
     <%= form.label :description, class: "label" %>
-    <%= form.text_area :description, class: "textarea textarea-bordered w-full h-24 resize-y focus:outline-none focus:ring-2 focus:ring-gray-100 focus:ring-opacity-50", disabled: disabled %>
+    <%= form.text_area :description, class: "textarea border rounded-md border-black-500 textarea-bordered  w-full h-24 resize-y focus:outline-none focus:ring-2 focus:ring-gray-100 focus:ring-opacity-50", disabled: disabled %>
   </div>
   <!-- Cover Image Upload Section -->
   <div>
     <div class="flex justify-end">
       <% if article.status == "waiting_for_review" %>
         <%= hidden_field_tag "article[status]", "waiting_for_review" %>
-        <%= button_tag "Reject", type: "submit", name: "article[status]", value: "draft", class: "bg-red-600 mr-2 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded" %>
-        <%= button_tag "Approve", type: "submit", name: "article[status]", value: "published", class: "bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded" %>
+        <%= button_tag "Reject", type: "submit", name: "article[status]", value: "draft", class: "mr-2 font-semibold py-2 px-4 cursor-pointer", style: "background-color: red; color: white; border: transparent; border-radius: 8px;" %>
+        <%= button_tag "Approve", type: "submit", name: "article[status]", value: "published", class: " font-semibold py-2 px-4 cursor-pointer", style: "background-color: green; color: white; border: transparent; border-radius: 8px;" %>
       <% else %>
-        <%= button_tag "Save as Draft", type: "submit", name: "article[status]", value: "draft", class: "bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded mr-2" %>
-        <%= button_tag "Submit for Review", type: "submit", name: "article[status]", value: "waiting_for_review", class: "bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded" %>
+        <%= button_tag "Save as Draft", type: "submit", name: "articleDraft[status]", value: "draft", class: "bg-gray-300 cursor-pointer hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded mr-2" %>
+        <%= button_tag "Submit for Review", type: "submit", name: "articleSubmit[status]", value: "waiting_for_review", class: "bg-gray-300 cursor-pointer hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded" %>
       <% end %>
     </div>
   </div>
