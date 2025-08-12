@@ -18,9 +18,39 @@
     <%= javascript_importmap_tags %>
   </head>
   <body>
-    <nav>
-      <%= button_to "Log out" , session_path, method: :delete if authenticated? %>
-    </nav>
+    <div class="navbar bg-base-100 shadow-sm px-4">
+      <!-- Hamburger menu -->
+      <div class="flex-none">
+        <div class="drawer">
+          <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+          <div class="drawer-content">
+            <label for="my-drawer" class="btn btn-primary drawer-button p-2">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" 
+            class="inline-block h-6 w-6 stroke-current">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </label>
+          </div>
+          <div class="drawer-side">
+            <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+            <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+              <li><%= link_to "New article", new_admin_article_path, class: "btn w-full" %></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Center: Admin link -->
+      <div class="flex-1 flex items-center justify-center">
+        <%= link_to "Admin", admin_articles_path, class: "text-2xl font-bold" %>
+      </div>
+      <!-- Right: Logout -->
+      <div class="flex-none">
+        <% if authenticated? %>
+          <%= button_to "Log out", session_path, method: :delete, class: "btn btn-ghost" %>
+        <% end %>
+      </div>
+    </div>
     <main class="container mx-auto mt-28 px-5 flex">
       <%= yield %>
     </main>

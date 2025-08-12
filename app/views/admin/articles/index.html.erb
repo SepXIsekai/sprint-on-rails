@@ -1,9 +1,7 @@
 <div class="flex flex-col font-bold text-xl w-full">
   <p class="text-green-500 font-rg"><%= notice %></p>
   <% content_for :title, "Articles" %>
-  <h1>Articles</h1>
-  <%= link_to "New article", new_admin_article_path ,class: "mt-5 my-5  text-white btn btn-neutral w-fit"%>
-
+  <h1 class="mb-4">Articles</h1>
   <div class="flex flex-col gap-4">
     <div id="articles">
       <% @articles.each do |article| %>

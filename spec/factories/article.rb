@@ -1,3 +1,4 @@
+
 FactoryBot.define do
   factory :article do
     description { "Test article description" }

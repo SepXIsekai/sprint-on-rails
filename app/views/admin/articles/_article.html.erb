@@ -6,12 +6,6 @@
         <span class="font-normal text-gray-800"><%= article.content&.title %></span>
       </h2>
 
-      <% if article.cover_image.present? %>
-        <div class="overflow-hidden rounded-md border border-base-300 max-w-full max-h-64">
-          <%= image_tag article.cover_image, alt: "Cover image for #{article.content&.title}", class: "object-cover w-full h-64" %>
-        </div>
-      <% end %>
-
       <p class="mt-1 mb-4 text-gray-700">
         <span class="text-primary font-semibold">Status:</span>
         <span class="font-normal"><%= article.status&.titleize %></span>
